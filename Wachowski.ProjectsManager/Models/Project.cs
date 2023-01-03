@@ -3,7 +3,7 @@ using Wachowski.ProjectsManager.INTERFACES;
 
 namespace Wachowski.ProjectsManager.Models
 {
-    public class Project: IProject
+    public class Project: IProject<Person>
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -12,6 +12,6 @@ namespace Wachowski.ProjectsManager.Models
         public DateTime DueDate { get; set; }
         [Display(Name = "Number of stages")]
         public int NumberOfStages { get; set; }
-        public ICollection<IPerson> Members { get; set; } = new List<IPerson>();
+        public ICollection<Person> Members { get; set; } = new List<Person>();
     }
 }

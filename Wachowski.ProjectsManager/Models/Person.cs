@@ -4,7 +4,7 @@ using Wachowski.ProjectsManager.INTERFACES;
 
 namespace Wachowski.ProjectsManager.Models
 {
-    public class Person: IPerson
+    public class Person: IPerson<Project>
     {
         public int Id { get; set; }
         [Display(Name = "First Name")]
@@ -17,6 +17,7 @@ namespace Wachowski.ProjectsManager.Models
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
         public DateTime DateOfBirth { get; set; }
         [Display(Name = "Full Name")]
+        public Project Project { get; set; }
         public string FullName
         {
             get { return FirstName + " " + LastName; }

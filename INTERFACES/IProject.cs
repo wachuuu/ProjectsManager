@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace Wachowski.ProjectsManager.INTERFACES
 {
-    public interface IProject
+    public interface IProject<P>
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -16,6 +16,6 @@ namespace Wachowski.ProjectsManager.INTERFACES
         public DateTime DueDate { get; set; }
         public int NumberOfStages { get; set; }
 
-        public ICollection<IPerson> Members { get; set; }
+        public ICollection<P> Members { get; set; }
     }
 }
