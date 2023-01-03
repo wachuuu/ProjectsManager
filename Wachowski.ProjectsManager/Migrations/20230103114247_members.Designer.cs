@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Wachowski.ProjectsManager.Data;
 
@@ -11,9 +12,11 @@ using Wachowski.ProjectsManager.Data;
 namespace Wachowski.ProjectsManager.Migrations
 {
     [DbContext(typeof(WachowskiProjectsManagerContext))]
-    partial class WachowskiProjectsManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20230103114247_members")]
+    partial class members
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
