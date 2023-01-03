@@ -12,8 +12,8 @@ using Wachowski.ProjectsManager.Data;
 namespace Wachowski.ProjectsManager.Migrations
 {
     [DbContext(typeof(WachowskiProjectsManagerContext))]
-    [Migration("20230103123532_projectid")]
-    partial class projectid
+    [Migration("20230103144108_ProjectsManagerDBv1.1")]
+    partial class ProjectsManagerDBv11
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

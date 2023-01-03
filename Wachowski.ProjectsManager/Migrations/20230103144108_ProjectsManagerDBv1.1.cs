@@ -5,7 +5,7 @@
 namespace Wachowski.ProjectsManager.Migrations
 {
     /// <inheritdoc />
-    public partial class asa : Migration
+    public partial class ProjectsManagerDBv11 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

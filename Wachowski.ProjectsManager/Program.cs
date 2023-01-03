@@ -29,4 +29,19 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Projects}/{action=Index}/{id?}");
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<WachowskiProjectsManagerContext>();
+        SeedData.Initialize(context);
+    } 
+    catch (Exception e)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(e, "An error occurred creating the DB.");
+    }
+}
+
 app.Run();
