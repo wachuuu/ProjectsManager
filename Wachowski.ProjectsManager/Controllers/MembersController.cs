@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Wachowski.ProjectsManager.CORE.Enums;
 using Wachowski.ProjectsManager.Data;
 using Wachowski.ProjectsManager.Models;
 
@@ -20,9 +21,37 @@ namespace Wachowski.ProjectsManager.Controllers
         }
 
         // GET: Members
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string memberRole, string search)
         {
-              return View(await _context.Members.Include(m => m.Project).ToListAsync());
+            ViewData["CurrentFilter"] = search;
+
+            var roles = Enum.GetValues(typeof(Role));
+            var members = _context.Members
+                .Include(m => m.Project)
+                .AsNoTracking();
+            if (!string.IsNullOrEmpty(search))
+            {
+                search = search.ToLower();
+                members = members.Where(m =>
+                    m.FirstName.ToLower().Contains(search)
+                    || m.Project.Name.ToLower().Contains(search)
+                );
+            }
+
+            if (!string.IsNullOrEmpty(memberRole))
+            {
+                Console.WriteLine(memberRole);
+
+                members = members.Where(m => m.Role == (Role)Enum.Parse(typeof(Role), memberRole));
+            }
+
+            var membersRoleVM = new RoleViewModel
+            {
+                Members = await members.ToListAsync(),
+                Roles = new SelectList(roles)
+            };
+
+            return View(membersRoleVM);
         }
 
         // GET: Members/Details/5

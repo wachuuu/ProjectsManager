@@ -21,9 +21,21 @@ namespace Wachowski.ProjectsManager.Controllers
         }
 
         // GET: Projects
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
-              return View(await _context.Projects.ToListAsync());
+            ViewData["CurrentFilter"] = search;
+            var projects = _context.Projects
+                .AsNoTracking();
+            if (!string.IsNullOrEmpty(search))
+            {
+                search = search.ToLower();
+                projects = projects.Where(m =>
+                    m.Name.ToLower().Contains(search)
+                    || m.Description.ToLower().Contains(search)
+                );
+            }
+
+            return View(await projects.ToListAsync());
         }
 
         // GET: Projects/Details/5

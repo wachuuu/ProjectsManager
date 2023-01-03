@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Wachowski.ProjectsManager.Models.Person>
+﻿@model Wachowski.ProjectsManager.Models.RoleViewModel
 
 @{
     ViewData["Title"] = "Members";
@@ -9,26 +9,40 @@
 <p>
     <a asp-action="Create">Add new member</a>
 </p>
+<form asp-controller="Members" asp-action="Index" method="get">
+    <p>
+        <select asp-for="MemberRole" asp-items="Model.Roles">
+            <option value="">All</option>
+        </select>
+
+        <input type="text" placeholder="Search members..." name="Search" value="@ViewData["CurrentFilter"]" asp-for="Search"/>
+        <input type="submit" value="Filter" />
+        @if (@ViewData["CurrentFilter"] != null && !string.IsNullOrEmpty(@ViewData["CurrentFilter"].ToString())) {
+            <span>| <a asp-action="Index">Clear</a></span>
+        }
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FullName)
+                @Html.DisplayNameFor(model => model.Members[0].FullName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Project)
+                @Html.DisplayNameFor(model => model.Members[0].Project)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Role)
+                @Html.DisplayNameFor(model => model.Members[0].Role)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateOfBirth)
+                @Html.DisplayNameFor(model => model.Members[0].DateOfBirth)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model.Members)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.FullName)
