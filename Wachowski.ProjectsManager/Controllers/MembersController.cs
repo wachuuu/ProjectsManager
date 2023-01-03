@@ -22,7 +22,7 @@ namespace Wachowski.ProjectsManager.Controllers
         // GET: Members
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Members.ToListAsync());
+              return View(await _context.Members.Include(m => m.Project).ToListAsync());
         }
 
         // GET: Members/Details/5
@@ -34,7 +34,9 @@ namespace Wachowski.ProjectsManager.Controllers
             }
 
             var person = await _context.Members
+                .Include(m => m.Project)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (person == null)
             {
                 return NotFound();
@@ -46,6 +48,7 @@ namespace Wachowski.ProjectsManager.Controllers
         // GET: Members/Create
         public IActionResult Create()
         {
+            ViewBag.ProjectId = new SelectList(_context.Projects.AsNoTracking(), "Id", "Name", null);
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace Wachowski.ProjectsManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Role,DateOfBirth")] Person person)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Role,DateOfBirth,ProjectId")] Person person)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace Wachowski.ProjectsManager.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.ProjectId = new SelectList(_context.Projects.AsNoTracking(), "Id", "Name", person.ProjectId);
             return View(person);
         }
 
@@ -78,6 +82,8 @@ namespace Wachowski.ProjectsManager.Controllers
             {
                 return NotFound();
             }
+
+            ViewBag.ProjectId = new SelectList(_context.Projects.AsNoTracking(), "Id", "Name", person.ProjectId);
             return View(person);
         }
 
@@ -86,7 +92,7 @@ namespace Wachowski.ProjectsManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Role,DateOfBirth")] Person person)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Role,DateOfBirth,ProjectId")] Person person)
         {
             if (id != person.Id)
             {
@@ -113,6 +119,8 @@ namespace Wachowski.ProjectsManager.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewBag.ProjectId = new SelectList(_context.Projects.AsNoTracking(), "Id", "Name", person.ProjectId);
             return View(person);
         }
 
@@ -125,6 +133,7 @@ namespace Wachowski.ProjectsManager.Controllers
             }
 
             var person = await _context.Members
+                .Include(m => m.Project)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (person == null)
             {

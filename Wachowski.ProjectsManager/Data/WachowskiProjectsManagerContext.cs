@@ -23,7 +23,6 @@ namespace Wachowski.ProjectsManager.Data
         }
 
         public DbSet<Wachowski.ProjectsManager.Models.Project> Projects { get; set; }
-
         public DbSet<Wachowski.ProjectsManager.Models.Person> Members { get; set; }
     }
 }

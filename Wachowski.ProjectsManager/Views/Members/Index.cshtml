@@ -1,22 +1,22 @@
 ﻿@model IEnumerable<Wachowski.ProjectsManager.Models.Person>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Members";
 }
 
-<h1>Index</h1>
-
+<h1>Project members</h1>
+<p>People that are assigned to projects. Every person can only be member of only one project</p>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Add new member</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                @Html.DisplayNameFor(model => model.FullName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                @Html.DisplayNameFor(model => model.Project)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Role)
@@ -31,10 +31,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
+                @Html.DisplayFor(modelItem => item.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LastName)
+                @Html.DisplayFor(modelItem => item.Project.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Role)
